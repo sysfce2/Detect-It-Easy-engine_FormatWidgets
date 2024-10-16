@@ -104,9 +104,9 @@ void LEWidget::reload()
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_ENTROPY, tr("Entropy"), XOptions::ICONTYPE_ENTROPY));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_EXTRACTOR, tr("Extractor"), XOptions::ICONTYPE_EXTRACTOR));
         ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_SEARCH, tr("Search"), XOptions::ICONTYPE_SEARCH));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER, "DOS_HEADER"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER, "VXD_HEADER"));
-        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OBJECTS, "Objects"));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_DOS_HEADER, "DOS_HEADER", XOptions::ICONTYPE_HEADER));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_VXD_HEADER, "VXD_HEADER", XOptions::ICONTYPE_HEADER));
+        ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OBJECTS, "Objects", XOptions::ICONTYPE_LIST));
 
         if (le.isOverlayPresent()) {
             ui->treeWidgetNavi->addTopLevelItem(createNewItem(SLE::TYPE_OVERLAY, tr("Overlay"), XOptions::ICONTYPE_OVERLAY));
@@ -706,7 +706,9 @@ void LEWidget::on_tableView_Objects_customContextMenuRequested(const QPoint &pos
         actionEntropy.setEnabled(bIsEnable);
         contextMenu.addAction(&actionEntropy);
 
-        contextMenu.addMenu(getShortcuts()->getRowCopyMenu(this, ui->tableView_Objects));
+        QMenu menuCopy(this);
+
+        getShortcuts()->adjustRowCopyMenu(&contextMenu, &menuCopy, ui->tableView_Objects);
 
         contextMenu.exec(ui->tableView_Objects->viewport()->mapToGlobal(pos));
     }

@@ -106,6 +106,11 @@ FORMS += \
     include($$PWD/../yara_widget/yara_widget.pri)
 }
 
+!contains(XCONFIG, xscanwidgets) {
+    XCONFIG += xscanwidgets
+    include($$PWD/../XScanEngine/xscanwidgets.pri)
+}
+
 !contains(XCONFIG, xhashwidget) {
     XCONFIG += xhashwidget
     include($$PWD/../XHashWidget/xhashwidget.pri)
